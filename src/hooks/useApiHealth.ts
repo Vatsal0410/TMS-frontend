@@ -1,22 +1,32 @@
 import { useEffect, useState } from "react";
-import { checkApiHealth } from "../api/health.api";
+import { checkBackendSever } from "../api/health.api";
 
 export const useApiHealth = () => {
-  const [isOnline, setIsOnline] = useState<boolean | null>(null);
+  const [apiHealth, setApiHealth] = useState<{
+    message: string | null,
+    status: number | null
+  }>({
+    message: null,
+    status: null
+  })
   useEffect(() => {
     const checkHealth = async () => {
-        try {
-            const result = await checkApiHealth()
-            setIsOnline(result)
-        } catch (error) {
-            console.log(error)
-            setIsOnline(false)
-        }
+      try {
+        const result = await checkBackendSever()
+        setApiHealth({
+          message: result.message,
+          status: result.status
+        })
+      } catch (error: any) {
+        console.log(error)
+        setApiHealth({
+          message: error.message,
+          status: 500
+        })
+      }
     }
-
     checkHealth()
-  }, [])
+  }, []);
 
-  return isOnline
-
-}
+  return apiHealth
+};

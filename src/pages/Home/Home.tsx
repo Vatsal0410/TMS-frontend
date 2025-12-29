@@ -1,10 +1,9 @@
-import WorkInProgress from "../../components/WorkInProgress/WorkInProgress";
-import { useApiHealth } from "../../hooks/useApiHealth";
+import WorkInProgress from "../../components/WorkInProgress/WorkInProgress"
 
 const Home = () => {
-  const apiStatus = useApiHealth();
+  return (
+    <WorkInProgress />
+  )
+}
 
-  return <WorkInProgress apiStatus={apiStatus} />;
-};
-
-export default Home;
+export default Home
